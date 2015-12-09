@@ -1,0 +1,143 @@
+<!-- 
+Filename:	TextEdit.html
+Project:	jQuery Text Editor
+Programmer:	Jorge Ramirez
+Description:	
+	This html file contains the basic setup for a remote text editor.
+
+Date: 02 December 2015 (Wednesday) 
+ -->
+
+
+<html>
+<head>
+	<title>AJAX Text Editor</title>
+
+	<script type="text/javascript" src="RemoteTextEditor.js"></script>
+	<script type="text/javascript">
+	// Instantiate the text editor object and get the file list
+	textEdit = new RemoteTextEditor("editArea", "fileSelector", "fileName");
+	textEdit.GetFileList();
+
+	/*
+	Name:			save()
+	Description:
+		This function checks if the file being saved exists to warn the user about overwriting a file.
+		It calls the textEditor file saving method if there is no conflicts.
+
+	Parameters:
+		textEditor - the object to call the SaveFile() method on when saving the file.
+
+	Output: None
+	Return: Void
+	*/
+	function save(textEditor){
+		var fileExt = ".txt" // default file extension
+		// Check if name is in use
+		var fileNames = document.getElementById("fileSelector").options
+		var newFileName = document.getElementById("fileName").value + fileExt
+		var inArray = false;
+
+		// Clear error message
+    	document.getElementById("error").innerHTML = ""
+
+		for (var fileOption = 0; fileOption < fileNames.length && !inArray; fileOption++) {
+			if (fileNames[fileOption].value == newFileName)
+			{
+				inArray = true
+			}
+		};
+
+		if (inArray) {
+			// Confirm overwrite
+			showOverwriteMessage()
+		} else {
+			// Save file
+			textEditor.SaveFile()
+		}
+	}
+
+
+
+	/*
+	Name:			showOverwriteMessage()
+	Description:
+		This function displays the hidden overwrite file warning and disables the save button
+	
+	Parameters: None
+	Output: None 
+	Return: Void
+	*/
+	function showOverwriteMessage(){
+		document.getElementById("saveButton").disabled = true
+		document.getElementById("overwriteMessage").style.display = "Block"
+	}
+
+
+
+	/*
+	Name:			hideOverwrite()
+	Description:
+		This function hides the overwrite file warning and enables the save button
+
+	Parameters: None
+	Output: None
+	Return: Void
+	*/
+	function hideOverwrite(){
+		document.getElementById("saveButton").disabled = false
+		document.getElementById("overwriteMessage").style.display = "None"
+	}
+	</script>
+
+	<style type="text/css">
+		.textEditor {
+			display: inline-block;;
+			padding: 15px;
+			margin: 20px;
+			border: 2px solid #B65A00;
+			border-radius: 5px;
+		}
+
+		#overwriteMessage { text-align: center; }
+		#error { color: red; }
+
+		h2 { color: #FF7F00; }
+		h3 { color: #FF9B38; }
+
+		button {
+			margin-left: 10px;
+			background-color: white;
+			border-color: #FFBC7D;
+		}
+
+		button:hover { cursor: pointer; }
+		button[disabled]:hover { cursor: default; }
+	</style>
+</head>
+<body>
+	<div class="textEditor">
+		<h2>File Editor</h2>
+
+		<!-- File to load selector -->
+		<h3>Load a file to edit?</h3>
+		<select id="fileSelector"></select><button onclick="textEdit.LoadFileContents()">Load</button>
+
+		<!-- Edit text file area -->
+		<h3>Edit file text:</h3>
+		<textarea id="editArea" rows="8", cols="50"></textarea>
+
+		<!-- File saving area -->
+		<h3>Save file: <span id="saved"></span></h3>
+		File Name: <input id="fileName" type="text"/>.txt <button id="saveButton" onclick="save(textEdit)">Save</button>
+		<!-- Hidden overwrite confirmation message and buttons -->
+		<div id="overwriteMessage" style="display:none;">
+			<p>This file already exists! Do you want to overwrite it?</p>
+			<button onclick="hideOverwrite();textEdit.SaveFile()">Overwrite</button> <button onclick="hideOverwrite()">Cancel</button>
+		</div>
+
+		<!-- Container for error messages -->
+		<p id="error"></p>
+	</div>
+</body>
+</html>
