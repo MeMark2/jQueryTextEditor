@@ -35,12 +35,12 @@ Date: 02 December 2015 (Wednesday)
 	function save(textEditor){
 		var fileExt = ".txt" // default file extension
 		// Check if name is in use
-		var fileNames = document.getElementById("fileSelector").options
-		var newFileName = document.getElementById("fileName").value + fileExt
+		var fileNames = $("#fileSelector")[0].options
+		var newFileName = $("#fileName")[0].value + fileExt
 		var inArray = false;
 
 		// Clear error message
-    	document.getElementById("error").innerHTML = ""
+    	$("#error")[0].innerHTML = ""
 
 		for (var fileOption = 0; fileOption < fileNames.length && !inArray; fileOption++) {
 			if (fileNames[fileOption].value == newFileName)
@@ -70,8 +70,8 @@ Date: 02 December 2015 (Wednesday)
 	Return: Void
 	*/
 	function showOverwriteMessage(){
-		document.getElementById("saveButton").disabled = true
-		document.getElementById("overwriteMessage").style.display = "Block"
+		$("#saveButton")[0].disabled = true
+		$("#overwriteMessage")[0].style.display = "Block"
 	}
 
 
@@ -86,8 +86,8 @@ Date: 02 December 2015 (Wednesday)
 	Return: Void
 	*/
 	function hideOverwrite(){
-		document.getElementById("saveButton").disabled = false
-		document.getElementById("overwriteMessage").style.display = "None"
+		$("#saveButton")[0].disabled = false
+		$("#overwriteMessage")[0].style.display = "None"
 	}
 	</script>
 
