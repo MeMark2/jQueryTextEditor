@@ -1,6 +1,6 @@
 /*
 Filename:	RemoteTextEditor.js
-Project:	AJAX Text Editor
+Project:	jQuery Text Editor
 Programmer:	Jorge Ramirez
 Description:	
 	This file contains the code for a AJAX based text editor class.

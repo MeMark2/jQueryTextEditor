@@ -1,7 +1,7 @@
 <?php 
 /*
 Filename:	GetFileList.php
-Project:	AJAX Text Editor
+Project:	jQuery Text Editor
 Programmer:	Jorge Ramirez
 Description:	
 	This file contains the code to scan and echo an array of files within a given directory (./MyFiles/).

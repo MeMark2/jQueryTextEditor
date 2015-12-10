@@ -1,7 +1,7 @@
 <?php 
 /*
 Filename:	SaveFile.php
-Project:	AJAX Text Editor
+Project:	jQuery Text Editor
 Programmer:	Jorge Ramirez
 Description:	
 	This file contains the code that the server uses to create/write to a file using data from a request message
