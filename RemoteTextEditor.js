@@ -40,8 +40,8 @@ function RemoteTextEditor(textBoxID, textFileSelectID, nameTextBoxID) {
 	this.SaveFile = (function() {
 		if (this.IsFileNameValid()) {
 			// Create request parameters
-			var requestParams = "name=" + document.getElementById(nameTextBoxID).value;
-			requestParams += "&content=" + document.getElementById(textBoxID).value;
+			var requestParams = "name=" + $("#" + nameTextBoxID).value;[0]
+			requestParams += "&content=" + $("#" + textBoxID).value;[0]
 
 			this.xmlhttp.onreadystatechange = (function() {
 				if (this.xmlhttp.readyState == 4 && this.xmlhttp.status == 200) {
@@ -49,15 +49,15 @@ function RemoteTextEditor(textBoxID, textFileSelectID, nameTextBoxID) {
 
 					if (response == "failure") {
 			        	// Display error saving message
-			        	document.getElementById(this.errorBoxID).innerHTML = "Unexpected error. File could not save.";
+			        	$("#" + this.errorBoxID)[0].innerHTML = "Unexpected error. File could not save.";
 			        } else {
 			        	// Clear error message
-			        	document.getElementById(this.errorBoxID).innerHTML = ""
-			        	document.getElementById(this.saveSuccessBoxID).innerHTML = "Saved!"
+			        	$("#" + this.errorBoxID)[0].innerHTML = ""
+			        	$("#" + this.saveSuccessBoxID)[0].innerHTML = "Saved!"
 
 			        	// Clear saved message after 2 seconds
 			        	window.setTimeout((function() {
-			        		document.getElementById(this.saveSuccessBoxID).innerHTML = ""
+			        		$("#" + this.saveSuccessBoxID)[0].innerHTML = ""
 			        	}).bind(this), 2000)
 
 			        	// Reload file list
@@ -149,17 +149,17 @@ function RemoteTextEditor(textBoxID, textFileSelectID, nameTextBoxID) {
         var namePatt = /^[0-9a-zA-Z ]+$/;
 
         // Get the file name
-        var fileName = $("#" + this.nameTextBoxID).value;
+        var fileName = $("#" + this.nameTextBoxID)[0].value;
 
         // Compare the input to the pattern.
         fileName = fileName.match(namePatt);
 
         if (fileName == null) {
         	// Display invalid file name message
-        	$("#" + this.errorBoxID).innerHTML = "That file name is not valid. Only letters, number and spaces are allowed.";
+        	$("#" + this.errorBoxID)[0].innerHTML = "That file name is not valid. Only letters, number and spaces are allowed.";
         } else {
         	// Clear invalid file name message
-        	$("#" + this.errorBoxID).innerHTML = ""
+        	$("#" + this.errorBoxID)[0].innerHTML = ""
         	valid = true
         }
 
