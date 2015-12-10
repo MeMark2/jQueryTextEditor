@@ -40,8 +40,8 @@ function RemoteTextEditor(textBoxID, textFileSelectID, nameTextBoxID) {
 	this.SaveFile = (function() {
 		if (this.IsFileNameValid()) {
 			// Create request parameters
-			var requestParams = "name=" + $("#" + nameTextBoxID).value;[0]
-			requestParams += "&content=" + $("#" + textBoxID).value;[0]
+			var requestParams = "name=" + $("#" + nameTextBoxID)[0].value;
+			requestParams += "&content=" + $("#" + textBoxID)[0].value;
 
 			this.xmlhttp.onreadystatechange = (function() {
 				if (this.xmlhttp.readyState == 4 && this.xmlhttp.status == 200) {
