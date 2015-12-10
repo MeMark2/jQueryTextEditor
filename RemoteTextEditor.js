@@ -40,38 +40,34 @@ function RemoteTextEditor(textBoxID, textFileSelectID, nameTextBoxID) {
 	this.SaveFile = (function() {
 		if (this.IsFileNameValid()) {
 			// Create request parameters
-			var requestParams = "name=" + $("#" + nameTextBoxID)[0].value;
-			requestParams += "&content=" + $("#" + textBoxID)[0].value;
+			var requestParams = {
+				name: $("#" + nameTextBoxID)[0].value, 
+				content: $("#" + textBoxID)[0].value
+			}
 
-			this.xmlhttp.onreadystatechange = (function() {
-				if (this.xmlhttp.readyState == 4 && this.xmlhttp.status == 200) {
-					var response = this.xmlhttp.responseText
+			// Create ajax request
+			$.ajax({ 
+				url: "SaveFile.php",
+				method: "POST",
+				data: requestParams
+			}).done((function(response){
+				if (response == "failure") {
+		        	// Display error saving message
+		        	$("#" + this.errorBoxID)[0].innerHTML = "Unexpected error. File could not save.";
+		        } else {
+		        	// Clear error message
+		        	$("#" + this.errorBoxID)[0].innerHTML = ""
+		        	$("#" + this.saveSuccessBoxID)[0].innerHTML = "Saved!"
 
-					if (response == "failure") {
-			        	// Display error saving message
-			        	$("#" + this.errorBoxID)[0].innerHTML = "Unexpected error. File could not save.";
-			        } else {
-			        	// Clear error message
-			        	$("#" + this.errorBoxID)[0].innerHTML = ""
-			        	$("#" + this.saveSuccessBoxID)[0].innerHTML = "Saved!"
+		        	// Clear saved message after 2 seconds
+		        	window.setTimeout((function() {
+		        		$("#" + this.saveSuccessBoxID)[0].innerHTML = ""
+		        	}).bind(this), 2000)
 
-			        	// Clear saved message after 2 seconds
-			        	window.setTimeout((function() {
-			        		$("#" + this.saveSuccessBoxID)[0].innerHTML = ""
-			        	}).bind(this), 2000)
-
-			        	// Reload file list
-			        	this.GetFileList()
-			        }
-				}
-			}).bind(this)
-
-			// Create request
-			this.xmlhttp.open("POST", "SaveFile.php");
-			this.xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-			// send request
-			this.xmlhttp.send(requestParams);
+		        	// Reload file list
+		        	this.GetFileList()
+		        }
+			}).bind(this))
 		}
 	}).bind(this)
 
